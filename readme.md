@@ -28,4 +28,4 @@ GaEd (Gambar Editor) merupakan aplikasi  berbasis web sederhana untuk mengedit g
 
 *	Efek filter foto
 
->	Anda bisa melihat screenshot aplikasi di album foto [facebook]() saya.
+>	Anda bisa melihat screenshot aplikasi di album foto [facebook](https://www.facebook.com/media/set/?set=a.580255972037763.1073741834.100001600956092&type=1&l=1b1ccfa668) saya.
