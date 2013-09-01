@@ -1,0 +1,115 @@
+.row {
+  margin: 20px;
+  padding: 20px;
+  border: 1px solid #f1f1f1;
+
+  -webkit-box-shadow: 0 0 2px #f5f5f5;
+  box-shadow: 0 0 2px #f5f5f5;
+  min-height: 560px;
+}
+
+.center {
+  text-align: center;
+}
+
+#foto {
+  max-width: 555px;
+  max-height: 555px;
+}
+
+#tombol-foto,#tombol-menu {
+  margin-top: 200px;
+}
+
+#ambil-foto {
+  margin-bottom: 20px;
+  width: 130px;
+  cursor: pointer;
+}
+
+#input-uploadify {
+  margin: 20px auto 30px;
+  text-align: center;
+}
+
+#input-uploadify-button {
+  margin-left: -18px;
+  padding: 3px 14px;
+  font-size: 15px;
+  line-height: normal;
+}
+
+#pengaturan-webcam {
+  margin-bottom: 20px;
+}
+
+.alert {
+  max-width: 350px;
+}
+
+#error-uploadify {
+  margin: 30px auto 0;
+}
+
+#error-webcam {
+  margin: 0 auto 20px;
+}
+
+#tombol-menu button {
+  width: 130px;
+}
+
+#potong-foto {
+  margin-bottom: 20px;
+}
+
+#hilang-potong button {
+  width: 60px;
+}
+
+#div-error-potong {
+  margin: 20px auto -20px;
+  max-width: 350px;
+}
+
+#filter-foto {
+  margin-top: 20px;
+}
+
+legend {
+  margin-top: -20px;
+}
+
+.hilang {
+  display: none;
+}
+
+.kiri {
+  text-align: left;
+}
+
+#filter div {
+  margin-bottom: 20px;
+}
+
+#filter button:nth-child(n+2) {
+  margin-left: 40px;
+}
+
+#filter button {
+  width: 160px;
+}
+
+.tangan {
+  cursor: pointer;
+}
+
+.konten {
+  margin-top: 50px;
+}
+
+.progress {
+  margin: 0 auto;
+  width: 400px;
+  height: 20px;
+}
