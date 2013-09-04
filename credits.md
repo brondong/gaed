@@ -18,4 +18,8 @@
 
 *	[CamanJS](https://github.com/meltingice/CamanJS)
 
+*	[Wookmark](https://github.com/GBKS/Wookmark-jQuery)
+
+*	[Colorbox](https://github.com/jackmoore/colorbox)
+
 *	[Glyphish Icons](http://www.glyphish.com/)

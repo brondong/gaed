@@ -26,7 +26,7 @@ return array(
 	|
 	*/
 
-	'url' => 'http://localhost/gambar/public/',
+	'url' => 'http://gaed.dev/',
 
 	/*
 	|--------------------------------------------------------------------------

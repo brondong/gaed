@@ -16,7 +16,9 @@ GaEd (Gambar Editor) merupakan aplikasi  berbasis web sederhana untuk mengedit g
 
 		composer install
 
-4.	Agar URL aplikasi lebih mudah dibaca anda dapat membuat virtual hosts
+4.	Semua foto yang sudah diunggah oleh pengguna dapat diakses di
+		
+		http://gaed.dev/galeri 
 
 ## Fitur
 

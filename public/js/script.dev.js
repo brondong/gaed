@@ -38,7 +38,11 @@ $(function() {
     } else {
       // url snapshot yang diunggah
       var foto = parse.foto;
-      suksesWebcam(foto);
+
+      // nama foto yang diunggah
+      var nama = parse.nama;
+
+      suksesWebcam(foto, nama);
     };
   });
 
@@ -78,7 +82,11 @@ $(function() {
       } else {
         // url foto yang diunggah
         var foto = parse.foto;
-        suksesUploadify(foto);
+
+        // nama foto
+        var nama = parse.nama;
+
+        suksesUploadify(foto, nama);
       };
     }
   });
@@ -102,9 +110,9 @@ $(function() {
    * @param  string foto
    * @return void
    */
-  function suksesUploadify(foto) {
+  function suksesUploadify(foto, nama) {
     // update foto
-    $("#foto").prop("src", foto);
+    $("#foto").prop("src", foto).data("nama", nama);
 
     // tampilkan menu
     $("#menu").fadeIn("fast");
@@ -120,7 +128,7 @@ $(function() {
    */
   $("#ambil-foto").click(function() {
     // buat webcam pada modal
-    var html = webcam.get_html(530, 330);
+    var html = webcam.get_html(600, 400);
     $(".modal-body").html(html);
 
     // tampilkan modal
@@ -143,6 +151,9 @@ $(function() {
    * @return void
    */
   $("#unggah-webcam").click(function() {
+    // disable tombol
+    $(this).prop("disabled", true);
+
     // unggah snapshot
     webcam.snap();
 
@@ -159,6 +170,9 @@ $(function() {
     $(".modal-body").html("");
     $("#teks-error-webcam").text("");
     $("#error-webcam").fadeOut("fast");
+
+    // enable tombol
+    $("#unggah-webcam").prop("disabled", false);
   });
 
   /**
@@ -171,6 +185,9 @@ $(function() {
     // tampilkan pesan error webcam
     $("#teks-error-webcam").text(pesan);
     $("#error-webcam").fadeIn("fast");
+
+    // enable tombol
+    $("#unggah-webcam").prop("disabled", false);
   }
 
   /**
@@ -179,9 +196,9 @@ $(function() {
    * @param  string foto
    * @return void
    */
-  function suksesWebcam(foto) {
+  function suksesWebcam(foto, nama) {
     // update foto
-    $("#foto").prop("src", foto);
+    $("#foto").prop("src", foto).data("nama", nama);
 
     // tampilkan menu
     $("#menu").fadeIn("fast");
@@ -223,6 +240,9 @@ $(function() {
 
     // tampilkan tombol batal & simpan potong
     tampilPotong();
+
+    // disable tombol
+    $(this).prop("disabled", true);
   });
 
   /**
@@ -236,6 +256,9 @@ $(function() {
 
     // hilangkan tombol
     hilangPotong();
+
+    // enable tombol
+    $("#potong-foto").prop("disabled", false);
   });
 
   /**
@@ -244,11 +267,14 @@ $(function() {
    * @return void
    */
   $("#simpan-potong").click(function() {
-    // data
+    // koordinat
     var w = $("#w").val();
     var h = $("#h").val();
     var x = $("#x").val();
     var y = $("#y").val();
+
+    // nama foto
+    var nama = $("#foto").data("nama");
 
     // hilangkan tombol
     hilangPotong();
@@ -257,7 +283,7 @@ $(function() {
     musnah();
 
     // kirim koordinat ke server
-    $.post(url_crop, { w: w, h: h, x: x, y: y }, function(respon) {
+    $.post(url_crop, { w: w, h: h, x: x, y: y, nama: nama }, function(respon) {
       // tidak valid
       if (respon.status == "error") {
         // pesan dari server
@@ -271,6 +297,9 @@ $(function() {
         suksesPotong(foto);
       };
     }, "json");
+
+    // enable tombol
+    $("#potong-foto").prop("disabled", false);
   });
 
   /**
@@ -330,27 +359,11 @@ $(function() {
    */
   function suksesPotong(foto) {
     // update foto
-    $("#foto").prop("src", foto).css("width", "").css("height", "");
+    $("#foto").prop("src", foto).css("display", "none").css("width", "").css("height", "");
     
     // musnah
     musnah();
   }
-
-  /**
-   * event klik tombol filter
-   * 
-   * @return void
-   */
-  $("#filter-foto").click(function() {
-    // inisialisasi canvas
-    initCanvas();
-
-    // tampilkan filter
-    $("#filters").fadeIn("fast");
-
-    // hapus tombol foto, menu & modal
-    $("#tombol-foto, #menu, .modal").remove();
-  });
 
   /**
    * musnahkan (destroy) Jcrop API
@@ -363,14 +376,35 @@ $(function() {
   }
 
   /**
+   * event klik tombol filter
+   * 
+   * @return void
+   */
+  $("#filter-foto").click(function() {
+    // data foto
+    var nama = $("#foto").data("nama");
+    
+    // inisialisasi canvas
+    initCanvas(nama);
+
+    // tampilkan filter
+    $("#filters").fadeIn("fast");
+
+    // hapus tombol foto, menu & modal
+    $("#tombol-foto, #menu, .modal").remove();
+  });
+
+  /**
    * inisialisasi canvas
    * 
    * @return void
    */
-  function initCanvas() {
+  function initCanvas(nama) {
     // rubah foto menjadi canvas
     Caman("#foto", function() {
       this.render();
+
+      $("#foto").data("nama", nama);
     });
    }
 
@@ -404,7 +438,27 @@ $(function() {
 
         // terapkan efek
         this[id]();
-        this.render();
+        this.render(function() {
+          // simpan perubahan foto
+          var foto = this.toBase64();
+          var nama = $("#foto").data("nama");
+
+          $.post(url_filter, { foto: foto, nama: nama }, function(respon) {
+            // tidak valid
+            if (respon.status == "error") {              
+              // pesan dari server
+              var pesan = respon.pesan;
+
+              errorFilter(pesan);
+
+            // valid
+            } else {
+              var parse = $.parseJSON(respon);
+              console.log(respon);
+              suksesFilter();
+            };
+          }, "json");
+        });
 
         // link unduh
         linkUnduh(id, teks);
@@ -417,6 +471,29 @@ $(function() {
       };
     });
   });
+
+  /**
+   * penanganan error filter foto
+   * 
+   * @param  string pesan
+   * @return void
+   */
+  function errorFilter(pesan) {
+    // tampilkan pesan error filter
+    $("#teks-error-filter").text(pesan);
+    $("#error-filter").fadeIn("fast");
+  }
+
+  /**
+   * penanganan sukses filter
+   * 
+   * @return void
+   */
+  function suksesFilter() {
+    // sembunyikan pesan error filter
+    $("#teks-error-filter").text("");
+    $("#error-filter").fadeOut("fast");
+  }
 
   /**
    * link unduh gambar

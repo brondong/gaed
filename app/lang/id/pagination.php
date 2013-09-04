@@ -15,6 +15,6 @@ return array(
 
 	'previous' => '&laquo;',
 
-	'next'     => '&raquo;',
+	'next'     => 'Muat Gambar',
 
 );

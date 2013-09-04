@@ -1,24 +1,21 @@
-.row {
+#konten-utama {
   margin: 20px;
   padding: 20px;
   border: 1px solid #f1f1f1;
-
   -webkit-box-shadow: 0 0 2px #f5f5f5;
   box-shadow: 0 0 2px #f5f5f5;
-  min-height: 560px;
+}
+
+#foto {
+  max-width: 100%;
 }
 
 .center {
   text-align: center;
 }
 
-#foto {
-  max-width: 555px;
-  max-height: 555px;
-}
-
 #tombol-foto,#tombol-menu {
-  margin-top: 200px;
+  margin-top: 20px;
 }
 
 #ambil-foto {
@@ -28,7 +25,7 @@
 }
 
 #input-uploadify {
-  margin: 20px auto 30px;
+  margin: 20px auto;
   text-align: center;
 }
 
@@ -37,6 +34,19 @@
   padding: 3px 14px;
   font-size: 15px;
   line-height: normal;
+}
+
+.modal {
+  width: 630px;
+  margin-left: -320px;
+}
+
+.modal.fade.in {
+  top: 42%;
+}
+
+.modal-body {
+  max-height: 400px;
 }
 
 #pengaturan-webcam {
@@ -67,8 +77,8 @@
   width: 60px;
 }
 
-#div-error-potong {
-  margin: 20px auto -20px;
+div#error-potong, div#error-filter {
+  margin: 20px auto 0;
   max-width: 350px;
 }
 
@@ -77,15 +87,7 @@
 }
 
 legend {
-  margin-top: -20px;
-}
-
-.hilang {
-  display: none;
-}
-
-.kiri {
-  text-align: left;
+  margin-top: 20px;
 }
 
 #filter div {
@@ -98,6 +100,14 @@ legend {
 
 #filter button {
   width: 160px;
+}
+
+.hilang {
+  display: none;
+}
+
+.kiri {
+  text-align: left;
 }
 
 .tangan {
